@@ -1,6 +1,6 @@
-package Echo;
+package ip;
 
-
+import Echo.EchoClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class EchoClient {
-
+public class Ipclient {
 
     // IO streams
     DataOutputStream toServer = null;
@@ -17,9 +16,8 @@ public class EchoClient {
 
     public void startIt() throws IOException {
         // Panel p to hold the label and text field
-        Scanner scanner = new Scanner(System.in);
         // Create a socket to connect to the server
-        Socket socket = new Socket("10.200.130.15", 8080);
+        Socket socket = new Socket("localhost", 9095);
 
 
         // Create an input stream to receive data from the server
@@ -28,18 +26,7 @@ public class EchoClient {
         // Create an output stream to send data to the server
         toServer = new DataOutputStream(socket.getOutputStream());
         System.out.println(socket.getLocalPort());
-        while (true) {
-            try {
 
-                toServer.writeUTF(scanner.next());
-                toServer.flush();
-                String text = fromServer.readUTF();
-
-                System.out.println(text);
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
-        }
 
 
         /**
@@ -49,9 +36,8 @@ public class EchoClient {
 
     }
     public static void main (String[]args) throws IOException {
-        EchoClient client = new EchoClient();
+        Ipclient client = new Ipclient();
         client.startIt();
 
     }
 }
-
