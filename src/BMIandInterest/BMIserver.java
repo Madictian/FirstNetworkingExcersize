@@ -86,8 +86,8 @@ public class BMIserver extends Application {
 
                         double BMI = (bmi.getWeight()/ bmi.getHeight()/ bmi.getHeight()) * 10000;
 
-                        /*outputToClient.writeDouble(BMI);
-                        outputToClient.flush();*/
+                        outputToClient.writeDouble(BMI);
+                        outputToClient.flush();
 
 
                         Platform.runLater(() -> {

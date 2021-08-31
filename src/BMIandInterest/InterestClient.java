@@ -1,16 +1,15 @@
 package BMIandInterest;
 
-
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class BMIclient {
+public class InterestClient {
     // IO streams
     ObjectOutputStream toServer = null;
-    DataInputStream fromServer = null;
+    ObjectInputStream fromServer = null;
 
     public void startIt() throws IOException {
         // Panel p to hold the label and text field
@@ -23,7 +22,7 @@ public class BMIclient {
             // Socket socket = new Socket("drake.Armstrong.edu", 8000);
 
             // Create an input stream to receive data from the server
-            fromServer = new DataInputStream(socket.getInputStream());
+            fromServer = new ObjectInputStream(socket.getInputStream());
 
             // Create an output stream to send data to the server
             toServer = new ObjectOutputStream(socket.getOutputStream());
@@ -35,23 +34,28 @@ public class BMIclient {
         }
         while(true) {
             try {
-                System.out.println("Enter Height");
-                double height = scanner.nextDouble();
+                System.out.println("Enter loan");
+                double loan = scanner.nextDouble();
 
-                System.out.println("Enter Weight");
-                double weight = scanner.nextDouble();
+                System.out.println("Enter interest");
+                double interest = scanner.nextDouble();
 
-                BMIobject object = new BMIobject(weight, height);
+                System.out.println("Enter period of loan");
+                double period = scanner.nextDouble();
+
+                Loan object = new Loan(loan, interest, period);
                 toServer.writeObject(object);
                 toServer.flush();
 
-                double bmi = fromServer.readDouble();
-                System.out.println("Your BMI is " + bmi);
+
+                CalculatedLoan loan1 = (CalculatedLoan) fromServer.readObject();
+                System.out.println("Monthly payment will be set to " + loan1.getMonthlyPayment() + "\n");
+                System.out.println("For a total of " + loan1.getTotalPayment());
 
 
 
 
-            } catch (IOException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 System.err.println(ex);
             }
         }
@@ -64,7 +68,7 @@ public class BMIclient {
      * JavaFX support. Not needed for running from the command line.
      */
     public static void main(String[] args) throws IOException {
-        BMIclient client = new BMIclient();
+        InterestClient client = new InterestClient();
         client.startIt();
 
     }
