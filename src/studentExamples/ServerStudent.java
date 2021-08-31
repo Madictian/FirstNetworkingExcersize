@@ -23,6 +23,7 @@ public class ServerStudent {
 
                 inputFromClient = new ObjectInputStream(socket.getInputStream());
 
+
                 Object object = inputFromClient.readObject();
 
                 outputToFile.writeObject(object);
