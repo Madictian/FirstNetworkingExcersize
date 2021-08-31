@@ -1,15 +1,16 @@
-package firstPart;
+package BMIandInterest;
+
+import firstPart.Client2;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-
-public class Client2 {
+public class BMIclient {
     // IO streams
-    DataOutputStream toServer = null;
+    ObjectOutputStream toServer = null;
     DataInputStream fromServer = null;
 
     public void startIt() throws IOException {
@@ -26,24 +27,29 @@ public class Client2 {
             fromServer = new DataInputStream(socket.getInputStream());
 
             // Create an output stream to send data to the server
-            toServer = new DataOutputStream(socket.getOutputStream());
+            toServer = new ObjectOutputStream(socket.getOutputStream());
             System.out.println(socket.getLocalPort());
+
+
         } catch (IOException ex) {
             System.out.println(ex);
         }
         while(true) {
             try {
-                // Get the radius from the text field
-                double radius = Double.parseDouble(scanner.next());
+                System.out.println("Enter Height");
+                double height = scanner.nextDouble();
 
-                // Send the radius to the server
-                toServer.writeDouble(radius);
+                System.out.println("Enter Weight");
+                double weight = scanner.nextDouble();
+
+                BMIobject object = new BMIobject(weight, height);
+                toServer.writeObject(object);
                 toServer.flush();
 
-                // Get area from the server
-                double area = fromServer.readDouble();
+                /*double bmi = fromServer.readDouble();
+                System.out.println("Your BMI is " + bmi);*/
 
-                // Display to the text area
+
 
 
             } catch (IOException ex) {
