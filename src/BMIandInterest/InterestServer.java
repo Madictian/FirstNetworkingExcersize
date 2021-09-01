@@ -74,14 +74,9 @@ public class InterestServer extends Application {
             try {
                 // Create data input and output streams
                 ObjectInputStream inputFromClient = new ObjectInputStream(socket.getInputStream());
-                ObjectOutputStream outputToClient = new ObjectOutputStream(
-                        socket.getOutputStream());
+                ObjectOutputStream outputToClient = new ObjectOutputStream(socket.getOutputStream());
                 while (true) {
-
-
-
                     Loan loan = (Loan) inputFromClient.readObject();
-
 
 
                     double interest = loan.getLoan() * Math.pow(1 + (loan.getInterest() / loan.getPeriod()), loan.getPeriod() * 12);
@@ -91,6 +86,11 @@ public class InterestServer extends Application {
                     CalculatedLoan calculatedLoan = new CalculatedLoan(monthyPayment, interest);
                     outputToClient.writeObject(calculatedLoan);
                     outputToClient.flush();
+
+                    Platform.runLater(() -> {
+                        ta.appendText("Total amount to be paid back is "
+                                + interest + "over a period of " + loan.getPeriod() + " years, with payments set to " + monthyPayment + '\n');
+                    });
 
 
                 }

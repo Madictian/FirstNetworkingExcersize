@@ -11,7 +11,7 @@ public class InterestClient {
     ObjectOutputStream toServer = null;
     ObjectInputStream fromServer = null;
 
-    public void startIt() throws IOException {
+    public void startIt() throws IOException{
         // Panel p to hold the label and text field
         Scanner scanner = new Scanner(System.in);
 
