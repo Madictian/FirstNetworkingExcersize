@@ -1,5 +1,6 @@
 package BMIandInterest;
 
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -105,4 +106,5 @@ public class InterestServer extends Application {
             launch(args);
         }
     }}
+
 

@@ -1,5 +1,6 @@
 package BMIandInterest;
 
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,32 +8,26 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class InterestClient {
-    // IO streams
-    ObjectOutputStream toServer = null;
-    ObjectInputStream fromServer = null;
 
-    public void startIt() throws IOException{
+
+    public void startIt() throws IOException {
         // Panel p to hold the label and text field
         Scanner scanner = new Scanner(System.in);
 
-        try {
-            // Create a socket to connect to the server
-            Socket socket = new Socket("localhost", 9095);
-            // Socket socket = new Socket("130.254.204.36", 8000);
-            // Socket socket = new Socket("drake.Armstrong.edu", 8000);
+        // Create a socket to connect to the server
+        Socket socket = new Socket("localhost", 9095);
+        // Socket socket = new Socket("130.254.204.36", 8000);
+        // Socket socket = new Socket("drake.Armstrong.edu", 8000);
 
-            // Create an input stream to receive data from the server
-            fromServer = new ObjectInputStream(socket.getInputStream());
+        // Create an input stream to receive data from the server
 
-            // Create an output stream to send data to the server
-            toServer = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println(socket.getLocalPort());
+        ObjectOutputStream toServer = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream fromServer = new ObjectInputStream(socket.getInputStream());
+        System.out.println(socket.getLocalPort());
 
 
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
         while(true) {
+
             try {
                 System.out.println("Enter loan");
                 double loan = scanner.nextDouble();
@@ -51,9 +46,6 @@ public class InterestClient {
                 CalculatedLoan loan1 = (CalculatedLoan) fromServer.readObject();
                 System.out.println("Monthly payment will be set to " + loan1.getMonthlyPayment() + "\n");
                 System.out.println("For a total of " + loan1.getTotalPayment());
-
-
-
 
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println(ex);
