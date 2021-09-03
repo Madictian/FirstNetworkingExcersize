@@ -1,6 +1,8 @@
 package BMIandInterest;
 
 
+
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -80,7 +82,7 @@ public class InterestServer extends Application {
                     Loan loan = (Loan) inputFromClient.readObject();
 
 
-                    double interest = loan.getLoan() * Math.pow(1 + (loan.getInterest() / loan.getPeriod()), loan.getPeriod() * 12);
+                    double interest = loan.getLoan() * Math.pow(1 + (loan.getInterest() / loan.getPeriod()), 12 * loan.getPeriod());
 
                     double monthyPayment = interest/(loan.getPeriod() * 12);
 

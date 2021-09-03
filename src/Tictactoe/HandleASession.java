@@ -1,4 +1,6 @@
-/*import java.io.DataInputStream;
+/*package Tictactoe;
+
+import java.io.DataInputStream;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
